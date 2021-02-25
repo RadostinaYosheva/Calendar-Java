@@ -1,6 +1,29 @@
+import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.Scanner;
 
 public class Calendar {
+
+    public static
+    String generateMonthString(int year, int month, int[] daysInMonth, String[] monthNames) {
+        int startDay = getStartDay(year, month);
+
+        String monthName = String.format("%28s\n", monthNames[month]);
+        String dayNames = " Sun Mon Tue Wed Thu Fri Sat\n";
+        StringBuilder days = new StringBuilder();
+
+        days.append("    ".repeat(Math.max(0, startDay)));
+
+        for (int i = 1; i < daysInMonth[month]; i++) {
+            days.append(String.format("%4d", i));
+
+            if ((startDay + i) % 7 == 0) {
+                days.append("\n");
+            }
+        }
+
+        return monthName + dayNames + days;
+    }
 
     private static int getStartDay(int year, int month) {
         int centuryValue = getCenturyValue(year);
@@ -80,6 +103,22 @@ public class Calendar {
             return year % 400 == 0;
         }
         return false;
+    }
+
+
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        int year = scan.nextInt();
+
+        int [] daysInMonth = {-1, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+        if (isLeapYear(year)) {
+            daysInMonth[2]++;
+        }
+
+        String [] monthNames = {"JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"};
+
+        String feb = generateMonthString(year, 2, daysInMonth, monthNames);
+        System.out.println(feb);
     }
 
 
