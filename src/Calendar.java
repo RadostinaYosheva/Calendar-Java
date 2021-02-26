@@ -1,8 +1,5 @@
-import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
-
 
 
 public class Calendar {
@@ -79,7 +76,7 @@ public class Calendar {
         return maxLength;
     }
 
-    public static
+    private static
     String generateMonthString(int year, int month, int[] daysInMonth, String[] monthNames) {
         final int MaxLineSpace = 28;
         final int MaxDaySpace = 4;
@@ -196,6 +193,8 @@ public class Calendar {
 
 
     public static void main(String[] args) {
+        System.out.print("Enter year: ");
+
         Scanner scan = new Scanner(System.in);
         int year = scan.nextInt();
 
