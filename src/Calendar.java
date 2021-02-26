@@ -5,17 +5,17 @@ import java.util.Scanner;
 public class Calendar {
 
     public static void printCalendar(int year) {
-        String [] monthNames = {"ERROR", "JANUARY", "FEBRUARY", "MARCH",
-                                "APRIL", "MAY", "JUNE", "JULY", "AUGUST",
-                                "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"};
-        int [] daysInMonth = {-1, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+        String[] monthNames = {"ERROR", "JANUARY", "FEBRUARY", "MARCH",
+                "APRIL", "MAY", "JUNE", "JULY", "AUGUST",
+                "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"};
+        int[] daysInMonth = {-1, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
         if (isLeapYear(year)) {
             daysInMonth[2]++;
         }
 
-        String[] january = splitString(generateMonthString(year,1, daysInMonth, monthNames));
-        String[] february = splitString(generateMonthString(year,2, daysInMonth, monthNames));
+        String[] january = splitString(generateMonthString(year, 1, daysInMonth, monthNames));
+        String[] february = splitString(generateMonthString(year, 2, daysInMonth, monthNames));
         String[] march = splitString(generateMonthString(year, 3, daysInMonth, monthNames));
         String[] april = splitString(generateMonthString(year, 4, daysInMonth, monthNames));
         String[] may = splitString(generateMonthString(year, 5, daysInMonth, monthNames));
@@ -27,16 +27,16 @@ public class Calendar {
         String[] november = splitString(generateMonthString(year, 11, daysInMonth, monthNames));
         String[] december = splitString(generateMonthString(year, 12, daysInMonth, monthNames));
 
-        String [][] firstGroup = {january, february, march, april};
-        String [][] secondGroup = {may, june, july, august};
-        String [][] thirdGroup = {september, october, november, december};
+        String[][] firstGroup = {january, february, march, april};
+        String[][] secondGroup = {may, june, july, august};
+        String[][] thirdGroup = {september, october, november, december};
 
         printGroup(firstGroup);
         printGroup(secondGroup);
         printGroup(thirdGroup);
     }
 
-    private static void printGroup(String[][]group) {
+    private static void printGroup(String[][] group) {
         int maxSize = findMaxSize(group);
         resizeSubgroups(group, maxSize);
 
@@ -54,13 +54,12 @@ public class Calendar {
 
     private static void resizeSubgroups(String[][] group, int size) {
         for (int i = 0; i < group.length; i++) {
-            // add the diff between maxSize and currSize
             int difference = size - group[i].length;
-            String[] resizedMonth =  Arrays.copyOf(group[i], size);
+            String[] resizedMonth = Arrays.copyOf(group[i], size);
             group[i] = resizedMonth;
 
             for (int j = difference; j > 0; j--) {
-                group[i][size-j] = String.format("%28s", " ");
+                group[i][size - j] = String.format("%28s", " ");
             }
         }
     }
@@ -76,8 +75,7 @@ public class Calendar {
         return maxLength;
     }
 
-    private static
-    String generateMonthString(int year, int month, int[] daysInMonth, String[] monthNames) {
+    private static String generateMonthString(int year, int month, int[] daysInMonth, String[] monthNames) {
         final int MaxLineSpace = 28;
         final int MaxDaySpace = 4;
 
@@ -124,18 +122,18 @@ public class Calendar {
         }
 
         /*
-        * Formula:
-        * Take the last 2 digits of the year.
-        * Divide it by 4 and discard any remainder.
-        * Add the day of the month.
-        * Add the month’s key value.
-        * If the date is in January or February of a leap year, subtract 1.
-        * Add the year (century) value.
-        * Add the last two digits of the year.
-        * Divide this value by 7 and take the remainder.
-        */
+         * Formula:
+         * Take the last 2 digits of the year.
+         * Divide it by 4 and discard any remainder.
+         * Add the day of the month.
+         * Add the month’s key value.
+         * If the date is in January or February of a leap year, subtract 1.
+         * Add the year (century) value.
+         * Add the last two digits of the year.
+         * Divide this value by 7 and take the remainder.
+         */
 
-        int key = (lastDigits/4 + 1 + monthValue + correction + centuryValue + lastDigits) % 7;
+        int key = (lastDigits / 4 + 1 + monthValue + correction + centuryValue + lastDigits) % 7;
 
         /* By the value of the remainder Saturday is the first day. Correct by subtracting 1.*/
         key -= 1;
