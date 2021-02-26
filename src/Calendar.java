@@ -5,8 +5,12 @@ import java.util.Scanner;
 
 public class Calendar {
 
-    public static void print(int year, String[] monthNames) {
+    public static void printCalendar(int year) {
+        String [] monthNames = {"ERROR", "JANUARY", "FEBRUARY", "MARCH",
+                                "APRIL", "MAY", "JUNE", "JULY", "AUGUST",
+                                "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"};
         int [] daysInMonth = {-1, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+
         if (isLeapYear(year)) {
             daysInMonth[2]++;
         }
@@ -28,37 +32,19 @@ public class Calendar {
         String [][] secondGroup = {may, june, july, august};
         String [][] thirdGroup = {september, october, november, december};
 
-        String space = "   ";
+        printGroup(firstGroup);
+        printGroup(secondGroup);
+        printGroup(thirdGroup);
+    }
 
-        int maxSizeFirst = findMaxSize(firstGroup);
-        resizeSubgroups(firstGroup, maxSizeFirst);
+    private static void printGroup(String[][]group) {
+        int maxSize = findMaxSize(group);
+        resizeSubgroups(group, maxSize);
 
-        int maxSizeSecond = findMaxSize(secondGroup);
-        resizeSubgroups(secondGroup, maxSizeSecond);
+        String space = "    ";
 
-        int maxSizeThird = findMaxSize(thirdGroup);
-        resizeSubgroups(thirdGroup, maxSizeThird);
-
-        for (int i = 0; i < maxSizeFirst; i++) {
-            for (String[] strings : firstGroup) {
-                System.out.print(strings[i]);
-                System.out.print(space);
-            }
-            System.out.println();
-        }
-        System.out.println();
-
-        for (int i = 0; i < maxSizeSecond; i++) {
-            for (String[] strings : secondGroup) {
-                System.out.print(strings[i]);
-                System.out.print(space);
-            }
-            System.out.println();
-        }
-        System.out.println();
-
-        for (int i = 0; i < maxSizeThird; i++) {
-            for (String[] strings : thirdGroup) {
+        for (int i = 0; i < maxSize; i++) {
+            for (String[] strings : group) {
                 System.out.print(strings[i]);
                 System.out.print(space);
             }
@@ -203,14 +189,7 @@ public class Calendar {
         Scanner scan = new Scanner(System.in);
         int year = scan.nextInt();
 
-        int [] daysInMonth = {-1, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-        if (isLeapYear(year)) {
-            daysInMonth[2]++;
-        }
-
-        String [] monthNames = {"ERROR", "JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"};
-
-        print(year, monthNames);
+        printCalendar(year);
     }
 
 
