@@ -3,6 +3,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
+
+
 public class Calendar {
 
     public static void printCalendar(int year) {
@@ -79,7 +81,11 @@ public class Calendar {
 
     public static
     String generateMonthString(int year, int month, int[] daysInMonth, String[] monthNames) {
+        final int MaxLineSpace = 28;
+        final int MaxDaySpace = 4;
+
         int startDay = getStartDay(year, month);
+        int counter = 0;
 
         String monthName = String.format("%28s\n", monthNames[month]);
         String dayNames = " Sun Mon Tue Wed Thu Fri Sat\n";
@@ -90,11 +96,15 @@ public class Calendar {
         for (int i = 1; i <= daysInMonth[month]; i++) {
             days.append(String.format("%4d", i));
 
+            counter++;
+
             if ((startDay + i) % 7 == 0) {
                 days.append("\n");
+                counter = 0;
             }
         }
 
+        days.append(" ".repeat(MaxLineSpace - counter * MaxDaySpace));
 
         return monthName + dayNames + days;
     }
