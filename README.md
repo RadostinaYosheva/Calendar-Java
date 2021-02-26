@@ -1,5 +1,8 @@
 # Calendar-Java
-A program to print a calendar of any input year. 
+A program to print a calendar of any input year.<br/>  
+By Radostina Yosheva, Computer Science student at FMI, Sofia University "St. Kliment Ohridski".  
+Faculty Number: 81987
+
 ## Format
 The calndar's format is 3 by 4 (3 rows with 4 months per row).<br/>
 
