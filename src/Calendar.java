@@ -1,8 +1,95 @@
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
 public class Calendar {
+
+    public static void print(int year, String[] monthNames) {
+        int [] daysInMonth = {-1, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+        if (isLeapYear(year)) {
+            daysInMonth[2]++;
+        }
+
+        String[] january = splitString(generateMonthString(year,1, daysInMonth, monthNames));
+        String[] february = splitString(generateMonthString(year,2, daysInMonth, monthNames));
+        String[] march = splitString(generateMonthString(year, 3, daysInMonth, monthNames));
+        String[] april = splitString(generateMonthString(year, 4, daysInMonth, monthNames));
+        String[] may = splitString(generateMonthString(year, 5, daysInMonth, monthNames));
+        String[] june = splitString(generateMonthString(year, 6, daysInMonth, monthNames));
+        String[] july = splitString(generateMonthString(year, 7, daysInMonth, monthNames));
+        String[] august = splitString(generateMonthString(year, 8, daysInMonth, monthNames));
+        String[] september = splitString(generateMonthString(year, 9, daysInMonth, monthNames));
+        String[] october = splitString(generateMonthString(year, 10, daysInMonth, monthNames));
+        String[] november = splitString(generateMonthString(year, 11, daysInMonth, monthNames));
+        String[] december = splitString(generateMonthString(year, 12, daysInMonth, monthNames));
+
+        String [][] firstGroup = {january, february, march, april};
+        String [][] secondGroup = {may, june, july, august};
+        String [][] thirdGroup = {september, october, november, december};
+
+        String space = "   ";
+
+        int maxSizeFirst = findMaxSize(firstGroup);
+        resizeSubgroups(firstGroup, maxSizeFirst);
+
+        int maxSizeSecond = findMaxSize(secondGroup);
+        resizeSubgroups(secondGroup, maxSizeSecond);
+
+        int maxSizeThird = findMaxSize(thirdGroup);
+        resizeSubgroups(thirdGroup, maxSizeThird);
+
+        for (int i = 0; i < maxSizeFirst; i++) {
+            for (String[] strings : firstGroup) {
+                System.out.print(strings[i]);
+                System.out.print(space);
+            }
+            System.out.println();
+        }
+        System.out.println();
+
+        for (int i = 0; i < maxSizeSecond; i++) {
+            for (String[] strings : secondGroup) {
+                System.out.print(strings[i]);
+                System.out.print(space);
+            }
+            System.out.println();
+        }
+        System.out.println();
+
+        for (int i = 0; i < maxSizeThird; i++) {
+            for (String[] strings : thirdGroup) {
+                System.out.print(strings[i]);
+                System.out.print(space);
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
+
+    private static void resizeSubgroups(String[][] group, int size) {
+        for (int i = 0; i < group.length; i++) {
+            // add the diff between maxSize and currSize
+            int difference = size - group[i].length;
+            String[] resizedMonth =  Arrays.copyOf(group[i], size);
+            group[i] = resizedMonth;
+
+            for (int j = difference; j > 0; j--) {
+                group[i][size-j] = String.format("%28s", " ");
+            }
+        }
+    }
+
+    private static int findMaxSize(String[][] group) {
+        int maxLength = group[0].length;
+
+        for (int i = 1; i < group.length; i++) {
+            if (group[i].length > maxLength) {
+                maxLength = group[i].length;
+            }
+        }
+        return maxLength;
+    }
 
     public static
     String generateMonthString(int year, int month, int[] daysInMonth, String[] monthNames) {
@@ -14,7 +101,7 @@ public class Calendar {
 
         days.append("    ".repeat(Math.max(0, startDay)));
 
-        for (int i = 1; i < daysInMonth[month]; i++) {
+        for (int i = 1; i <= daysInMonth[month]; i++) {
             days.append(String.format("%4d", i));
 
             if ((startDay + i) % 7 == 0) {
@@ -22,7 +109,13 @@ public class Calendar {
             }
         }
 
+
         return monthName + dayNames + days;
+    }
+
+    private static String[] splitString(String month) {
+
+        return month.split("\n");
     }
 
     private static int getStartDay(int year, int month) {
@@ -115,10 +208,9 @@ public class Calendar {
             daysInMonth[2]++;
         }
 
-        String [] monthNames = {"JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"};
+        String [] monthNames = {"ERROR", "JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"};
 
-        String feb = generateMonthString(year, 2, daysInMonth, monthNames);
-        System.out.println(feb);
+        print(year, monthNames);
     }
 
 
